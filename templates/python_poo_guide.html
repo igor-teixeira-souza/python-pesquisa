@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python e POO - Guia Moderno</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Fira+Code:wght@400&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --primary-color: #3776ab;
+        --primary-light: #5a9bd5;
+        --primary-dark: #2a5f8a;
+        --secondary-color: #ffd43b;
+        --secondary-light: #ffe873;
+        --secondary-dark: #e6c231;
+        --accent-color: #ff6b6b;
+        --dark-color: #2b2b2b;
+        --dark-medium: #4a4a4a;
+        --light-color: #f8f9fa;
+        --light-medium: #e9ecef;
+        --white: #ffffff;
+        --success-color: #40c057;
+        --transition: all 0.3s ease;
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+        --border-radius: 12px;
+        --border-radius-sm: 6px;
+    }
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: 'Poppins', sans-serif;
+        line-height: 1.7;
+        color: var(--dark-color);
+        background-color: var(--light-color);
+        overflow-x: hidden;
+    }
+    
+    /* Scrollbar personalizada */
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: var(--light-medium);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        border-radius: 5px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-dark);
+    }
+    
+    /* Header */
+    header {
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        color: var(--white);
+        padding: 3rem 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        box-shadow: var(--shadow-md);
+    }
+    
+    header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.05)" d="M0,0 L100,0 L100,100 L0,100 Z" /></svg>');
+        background-size: cover;
+        opacity: 0.1;
+    }
+    
+    .header-content {
+        position: relative;
+        z-index: 1;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+    
+    h1 {
+        margin: 0;
+        font-size: 2.8rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        line-height: 1.2;
+    }
+    
+    .subtitle {
+        font-size: 1.2rem;
+        font-weight: 300;
+        opacity: 0.9;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    /* Container principal */
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+    
+    /* Seções */
+    .section {
+        background: var(--white);
+        margin: 3rem 0;
+        padding: 2.5rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-sm);
+        transition: var(--transition);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    
+    .section:hover {
+        box-shadow: var(--shadow-lg);
+        transform: translateY(-3px);
+    }
+    
+    h2 {
+        color: var(--primary-color);
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        position: relative;
+        padding-bottom: 0.5rem;
+    }
+    
+    h2::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: var(--secondary-color);
+        border-radius: 3px;
+    }
+    
+    p {
+        margin-bottom: 1.2rem;
+        color: var(--dark-medium);
+    }
+    
+    ul, ol {
+        margin-bottom: 1.5rem;
+        padding-left: 1.5rem;
+    }
+    
+    li {
+        margin-bottom: 0.5rem;
+    }
+    
+    /* Destaques */
+    .highlight {
+        background-color: var(--light-medium);
+        padding: 1.5rem;
+        border-radius: var(--border-radius-sm);
+        margin: 1.5rem 0;
+        border-left: 4px solid var(--primary-color);
+        position: relative;
+    }
+    
+    .highlight::before {
+        content: "💡";
+        position: absolute;
+        left: -15px;
+        top: -15px;
+        background: var(--white);
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: var(--shadow-sm);
+        font-size: 0.9rem;
+    }
+    
+    /* Código */
+    .code {
+        font-family: 'Fira Code', monospace;
+        background-color: var(--dark-color);
+        color: var(--white);
+        padding: 0.3rem 0.6rem;
+        border-radius: var(--border-radius-sm);
+        font-size: 0.9rem;
+        display: inline-block;
+    }
+    
+    /* Seção de demonstração */
+    .demo-section {
+        text-align: center;
+        padding: 3rem 2rem;
+        background: linear-gradient(135deg, var(--light-medium), var(--white));
+        border-radius: var(--border-radius);
+        margin: 3rem 0;
+        border: 1px dashed var(--primary-light);
+    }
+    
+    .demo-section h2 {
+        margin-bottom: 2rem;
+    }
+    
+    /* Botões */
+    button {
+        background: linear-gradient(to right, var(--primary-color), var(--primary-light));
+        color: var(--white);
+        border: none;
+        padding: 1rem 2rem;
+        font-size: 1rem;
+        font-weight: 500;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: var(--transition);
+        box-shadow: 0 4px 15px rgba(55, 118, 171, 0.3);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(55, 118, 171, 0.4);
+    }
+    
+    button:active {
+        transform: translateY(0);
+    }
+    
+    button::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to right, var(--primary-light), var(--primary-color));
+        opacity: 0;
+        transition: var(--transition);
+        z-index: 1;
+    }
+    
+    button:hover::after {
+        opacity: 1;
+    }
+    
+    .btn-text {
+        position: relative;
+        z-index: 2;
+    }
+    
+    /* Resultado */
+    #result {
+        margin-top: 2rem;
+        padding: 1.5rem;
+        background-color: var(--white);
+        border-radius: var(--border-radius-sm);
+        box-shadow: var(--shadow-sm);
+        text-align: left;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.5s ease;
+    }
+    
+    #result.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* Footer */
+    footer {
+        text-align: center;
+        padding: 3rem 0;
+        background: linear-gradient(135deg, var(--dark-color), #1a1a1a);
+        color: var(--white);
+        margin-top: 4rem;
+    }
+    
+    .footer-content {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+    }
+    
+    .footer-link {
+        color: var(--secondary-light);
+        text-decoration: none;
+        transition: var(--transition);
+    }
+    
+    .footer-link:hover {
+        color: var(--white);
+        text-decoration: underline;
+    }
+    
+    /* Vantagens */
+    .advantages {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+    
+    .advantage-card {
+        background: var(--white);
+        padding: 1.8rem;
+        border-radius: var(--border-radius-sm);
+        box-shadow: var(--shadow-sm);
+        transition: var(--transition);
+        border-top: 4px solid var(--secondary-color);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .advantage-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .advantage-card h3 {
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+    
+    .advantage-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(55, 118, 171, 0.05), rgba(255, 212, 59, 0.05));
+        z-index: 0;
+    }
+    
+    .advantage-content {
+        position: relative;
+        z-index: 1;
+    }
+    
+    /* Ícones */
+    .icon {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        color: var(--primary-color);
+    }
+    
+    /* Responsividade */
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 2.2rem;
+        }
+        
+        .section {
+            padding: 1.5rem;
+        }
+        
+        .advantages {
+            grid-template-columns: 1fr;
+        }
+        
+        .demo-section {
+            padding: 2rem 1rem;
+        }
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .fade-in {
+        animation: fadeIn 0.6s ease forwards;
+    }
+    
+    .delay-1 { animation-delay: 0.2s; }
+    .delay-2 { animation-delay: 0.4s; }
+    .delay-3 { animation-delay: 0.6s; }
+    
+    /* Python snake decoration */
+    .python-decoration {
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        opacity: 0.1;
+        z-index: 0;
+    }
+    
+    .python-1 {
+        top: 20%;
+        left: 5%;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%233776ab" d="M50,0 C30,0 20,10 20,30 L20,50 C20,70 30,80 50,80 C70,80 80,70 80,50 L80,30 C80,10 70,0 50,0 Z M50,10 C65,10 70,15 70,30 L70,50 C70,65 65,70 50,70 C35,70 30,65 30,50 L30,30 C30,15 35,10 50,10 Z"/></svg>');
+        background-size: contain;
+        animation: float 6s ease-in-out infinite;
+    }
+    
+    .python-2 {
+        bottom: 10%;
+        right: 8%;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23ffd43b" d="M50,0 C30,0 20,10 20,30 L20,50 C20,70 30,80 50,80 C70,80 80,70 80,50 L80,30 C80,10 70,0 50,0 Z M50,10 C65,10 70,15 70,30 L70,50 C70,65 65,70 50,70 C35,70 30,65 30,50 L30,30 C30,15 35,10 50,10 Z"/></svg>');
+        background-size: contain;
+        animation: float 8s ease-in-out infinite 1s;
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-15px); }
+    }
+</style>
+</head>
+<body>
+    <header>
+        <div class="python-decoration python-1"></div>
+        <div class="python-decoration python-2"></div>
+        <div class="header-content">
+            <h1 class="fade-in">Python e Programação Orientada a Objetos</h1>
+            <p class="subtitle fade-in delay-1">Um guia completo sobre Python e seus benefícios na carreira profissional</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section class="section fade-in delay-1">
+            <h2>O que é Python?</h2>
+            <p>Python é uma linguagem de programação de alto nível, interpretada, de script, imperativa, orientada a objetos, funcional, de tipagem dinâmica e forte. Foi criada por Guido van Rossum e lançada pela primeira vez em 1991.</p>
+            
+            <div class="highlight">
+                <p>Python se destaca por sua sintaxe clara e legível, que prioriza a facilidade de leitura e escrita do código. Isso reduz os custos de manutenção e desenvolvimento de programas.</p>
+            </div>
+            
+            <p>A linguagem suporta múltiplos paradigmas de programação, incluindo orientação a objetos, programação imperativa e programação funcional. Possui um sistema de tipos dinâmico e gerenciamento automático de memória.</p>
+        </section>
+        
+        <section class="section fade-in delay-2">
+            <h2>Para que serve Python?</h2>
+            <p>Python é uma linguagem versátil que pode ser usada para diversas finalidades:</p>
+            
+            <div class="advantages">
+                <div class="advantage-card">
+                    <div class="icon">🌐</div>
+                    <h3>Desenvolvimento Web</h3>
+                    <p>Com frameworks robustos como Django e Flask, Python é excelente para criar aplicações web escaláveis.</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <div class="icon">📊</div>
+                    <h3>Ciência de Dados</h3>
+                    <p>Bibliotecas como Pandas, NumPy e Matplotlib fazem de Python a linguagem preferida para análise de dados.</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <div class="icon">🤖</div>
+                    <h3>Machine Learning</h3>
+                    <p>Com TensorFlow, PyTorch e scikit-learn, Python domina o campo de inteligência artificial.</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <div class="icon">⚙️</div>
+                    <h3>Automação</h3>
+                    <p>Scripts Python podem automatizar tarefas repetitivas, aumentando a produtividade.</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <div class="icon">🎮</div>
+                    <h3>Desenvolvimento de Jogos</h3>
+                    <p>Com bibliotecas como PyGame, é possível criar jogos 2D de forma eficiente.</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <div class="icon">📱</div>
+                    <h3>Aplicações Desktop</h3>
+                    <p>Frameworks como Tkinter, PyQt e Kivy permitem criar aplicações gráficas multiplataforma.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section fade-in delay-2">
+            <h2>Vantagens de usar Python na vida profissional</h2>
+            
+            <div class="advantages">
+                <div class="advantage-card">
+                    <h3>🚀 Alta Demanda</h3>
+                    <p>Python está entre as linguagens mais requisitadas, especialmente em ciência de dados, IA e automação.</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <h3>🔄 Versatilidade</h3>
+                    <p>Única linguagem usada desde desenvolvimento web até inteligência artificial.</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <h3>⏱️ Produtividade</h3>
+                    <p>Sintaxe simples permite desenvolver soluções 3-5x mais rápido que outras linguagens.</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <h3>👥 Comunidade Ativa</h3>
+                    <p>Uma das maiores comunidades de desenvolvedores, com suporte e pacotes para tudo.</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <h3>📚 Ecossistema Rico</h3>
+                    <p>Mais de 300,000 pacotes no PyPI para praticamente qualquer necessidade.</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <h3>🎓 Fácil Aprendizado</h3>
+                    <p>Sintaxe intuitiva faz com que seja a linguagem ideal para iniciantes na programação.</p>
+                </div>
+            </div>
+            
+            <div class="highlight">
+                <p>Segundo o Stack Overflow Developer Survey 2023, Python é a 3ª linguagem mais popular entre desenvolvedores profissionais e a mais querida por quem está aprendendo a programar.</p>
+            </div>
+        </section>
+        
+        <section class="section fade-in delay-3">
+            <h2>O que é POO (Programação Orientada a Objetos)?</h2>
+            <p>Programação Orientada a Objetos (POO) é um paradigma de programação baseado no conceito de "objetos", que podem conter dados na forma de campos (atributos) e códigos, na forma de procedimentos (métodos).</p>
+            
+            <div class="highlight">
+                <p>A POO permite modelar sistemas complexos de forma mais intuitiva, aproximando a estrutura do programa de como pensamos sobre o mundo real, com seus objetos e interações.</p>
+            </div>
+            
+            <h3>Os quatro pilares da POO:</h3>
+            <div class="advantages">
+                <div class="advantage-card">
+                    <h3>🧠 Abstração</h3>
+                    <p>Modelar apenas os aspectos relevantes de um objeto para o sistema em desenvolvimento.</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <h3>📦 Encapsulamento</h3>
+                    <p>Esconder detalhes de implementação e expor apenas interfaces bem definidas.</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <h3>🧬 Herança</h3>
+                    <p>Criar novas classes baseadas em classes existentes, aproveitando comportamentos comuns.</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <h3>🎭 Polimorfismo</h3>
+                    <p>Objetos de diferentes classes responderem de forma específica à mesma mensagem.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section fade-in delay-3">
+            <h2>Vantagens de utilizar POO</h2>
+            
+            <div class="advantages">
+                <div class="advantage-card">
+                    <h3>🧩 Modularidade</h3>
+                    <p>Divide sistemas complexos em componentes menores e mais gerenciáveis.</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <h3>♻️ Reutilização</h3>
+                    <p>Classes e objetos podem ser reutilizados em diferentes partes do sistema.</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <h3>🔧 Manutenção</h3>
+                    <p>Mudanças em uma parte do sistema têm menor impacto em outras partes.</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <h3>🔄 Escalabilidade</h3>
+                    <p>Facilita o crescimento e evolução de sistemas complexos.</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <h3>👥 Trabalho em Equipe</h3>
+                    <p>Permite dividir o desenvolvimento em módulos independentes.</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <h3>🧠 Modelagem Intuitiva</h3>
+                    <p>Mapeia conceitos do mundo real para a estrutura do programa.</p>
+                </div>
+            </div>
+            
+            <div class="highlight">
+                <p>Em Python, tudo é um objeto! A linguagem foi construída com a POO como um de seus paradigmas centrais, tornando a implementação de sistemas orientados a objetos natural e eficiente.</p>
+            </div>
+        </section>
+        
+        <section class="demo-section fade-in delay-3">
+            <h2>Demonstração de Integração Python/HTML</h2>
+            <p>Clique no botão abaixo para executar uma função Python no back-end e ver a comunicação em ação:</p>
+            
+            <button onclick="fetchPythonData()">
+                <span class="btn-text">Executar Código Python</span>
+            </button>
+            
+            <div id="result">
+                <!-- Resultado será inserido aqui via JavaScript -->
+            </div>
+            
+            <script>
+                function fetchPythonData() {
+                    // Mostra estado de carregamento
+                    const button = document.querySelector('button');
+                    const buttonText = button.querySelector('.btn-text');
+                    buttonText.textContent = 'Processando...';
+                    button.style.opacity = '0.8';
+                    
+                    fetch('/python-demo')
+                        .then(response => response.json())
+                        .then(data => {
+                            const resultDiv = document.getElementById('result');
+                            resultDiv.innerHTML = `
+                                <h3>🔍 Resultado do Servidor Python</h3>
+                                <p><strong>Mensagem:</strong> ${data.message}</p>
+                                <p><strong>Data/hora no servidor:</strong> ${data.timestamp}</p>
+                                <p><strong>Número aleatório:</strong> ${data.random_number}</p>
+                                <p><strong>Status:</strong> <span style="color: var(--success-color);">${data.status}</span></p>
+                            `;
+                            resultDiv.classList.add('show');
+                            
+                            // Restaura o botão
+                            buttonText.textContent = 'Executar Novamente';
+                            button.style.opacity = '1';
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            buttonText.textContent = 'Erro - Tentar Novamente';
+                            button.style.opacity = '1';
+                        });
+                }
+            </script>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <h3>Python e POO - Guia Moderno</h3>
+            <p>© 2023 Todos os direitos reservados</p>
+            
+            <div class="footer-links">
+                <a href="#" class="footer-link">Documentação Python</a>
+                <a href="#" class="footer-link">Tutoriais</a>
+                <a href="#" class="footer-link">Sobre</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
