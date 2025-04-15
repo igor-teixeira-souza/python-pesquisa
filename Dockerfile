@@ -1,16 +1,20 @@
-# Use the official Node.js image as the base image
-FROM node:18
+# Usa uma imagem base Python oficial com versão 3.9 (pode ajustar conforme necessidade)
+FROM python:3.9-slim
 
-# Set the working directory in the container
-WORKDIR /main
+# Define o diretório de trabalho dentro do container
+WORKDIR /app
 
-EXPOSE 3000
+# Copia primeiro o arquivo de requisitos para aproveitar o cache de camadas
+COPY requirements.txt .
 
-# Copy the application files into the working directory
-COPY . /main
+# Instala as dependências do Python
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Install the application dependencies
-RUN npm install
+# Copia todo o conteúdo do projeto para o container
+COPY . .
 
-# Define the entry point for the container
-CMD ["npm", "start"]
+# Expõe a porta que o Flask vai rodar (normalmente 5000)
+EXPOSE 5000
+
+# Comando para rodar a aplicação usando Gunicorn (produção)
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
